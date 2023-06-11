@@ -11,7 +11,6 @@ const Bloglist = ({ blogFormRef, user, blogs, logout, createBlog }) => {
         <Blog key={blog.id} blog={blog} />
       )
     }
-    <br />
     <Togglable buttonLabel='new blog' ref={blogFormRef}><BlogForm createBlog={createBlog} /></Togglable>
     </div>
   )

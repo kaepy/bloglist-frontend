@@ -28,6 +28,7 @@ const Blog = ({ blog }) => {
           <li>author: {blog.author}</li>
           <li>url: {blog.url} <button>like</button></li>
           <li>likes: {blog.likes}</li>
+          <li>user: {blog.user.username}</li>
         </ul>
       )}
     </div>
