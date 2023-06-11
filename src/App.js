@@ -13,9 +13,6 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [newTitle, setNewTitle] = useState('')
-  const [newAuthor, setNewAuthor] = useState('')
-  const [newUrl, setNewUrl] = useState('')
 
   const blogFormRef = useRef()
 
@@ -67,43 +64,18 @@ const App = () => {
     handleNotificationChange(`See you again!`)
   }
 
-  const addBlog = async (event) => {
-    event.preventDefault()
-    //console.log('button clicked', event.target)
-
-    const blogObject = {
-      title: newTitle,
-      author: newAuthor,
-      url: newUrl
-    }
-
+  const addBlog = (blogObject) => {
     blogFormRef.current.toggleVisibility()
+
+    //console.log(blogObject)
 
     blogService
       .create(blogObject)
       .then(returnedBlog => {
         setBlogs(blogs.concat(returnedBlog))
-        setNewTitle('')
-        setNewAuthor('')
-        setNewUrl('')
       })
 
-    handleNotificationChange(`A new blog ${newTitle} by ${newAuthor} added`)
-  }
-
-  const handleTitleChange = (event) => {
-    //console.log(event.target.value)
-    setNewTitle(event.target.value)
-  }
-
-  const handleAuthorChange = (event) => {
-    //console.log(event.target.value)
-    setNewAuthor(event.target.value)
-  }
-
-  const handleUrlChange = (event) => {
-    //console.log(event.target.value)
-    setNewUrl(event.target.value)
+    handleNotificationChange(`A new blog ${blogObject.newTitle} by ${blogObject.newAuthor} added`)
   }
 
   const handleNotificationChange = (notification) => {
@@ -125,7 +97,7 @@ const App = () => {
 
       {!user && <LoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword} />}
 
-      {user && <Bloglist blogFormRef={blogFormRef} user={user} blogs={blogs} logout={logout} addBlog={addBlog} newTitle={newTitle} newAuthor={newAuthor} newUrl={newUrl} handleTitleChange={handleTitleChange} handleAuthorChange={handleAuthorChange} handleUrlChange={handleUrlChange} />}
+      {user && <Bloglist blogFormRef={blogFormRef} user={user} blogs={blogs} logout={logout} createBlog={addBlog} />}
 
     </div>
   )

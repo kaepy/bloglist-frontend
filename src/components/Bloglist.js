@@ -1,11 +1,8 @@
-//import { useRef } from 'react'
 import Blog from './Blog'
 import BlogForm from './BlogForm'
 import Togglable from './Togglable'
 
-const Bloglist = ({ blogFormRef, user, blogs, logout, addBlog, newTitle, newAuthor, newUrl, handleTitleChange, handleAuthorChange, handleUrlChange }) => {
-
-  //const blogFormRef = useRef()
+const Bloglist = ({ blogFormRef, user, blogs, logout, createBlog }) => {
 
   return (
     <div>
@@ -15,7 +12,7 @@ const Bloglist = ({ blogFormRef, user, blogs, logout, addBlog, newTitle, newAuth
       )
     }
     <br />
-    <Togglable buttonLabel='new blog' ref={blogFormRef}><BlogForm addBlog={addBlog} newTitle={newTitle} newAuthor={newAuthor} newUrl={newUrl} handleTitleChange={handleTitleChange} handleAuthorChange={handleAuthorChange} handleUrlChange={handleUrlChange} /></Togglable>
+    <Togglable buttonLabel='new blog' ref={blogFormRef}><BlogForm createBlog={createBlog} /></Togglable>
     </div>
   )
 }
