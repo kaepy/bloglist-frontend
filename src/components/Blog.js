@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Blog = ({ blog, updateBlog }) => {
+const Blog = ({ user, blog, updateBlog, removeBlog }) => {
   const [showBlogDetail, setShowBlogDetail] = useState(false)
   //console.log(showBlogDetail)
 
@@ -25,13 +25,26 @@ const Blog = ({ blog, updateBlog }) => {
     //console.log('button clicked', event.target)
 
     const newLikes = blog.likes + 1
+
+    console.log('Blog-blog: ', blog)
     
     updateBlog({
       id: blog.id,
       title: blog.title,
       author: blog.author,
       url: blog.url,
-      likes: newLikes
+      likes: newLikes,
+      user: blog.user.id
+    })
+  }
+
+  const deleteBlog = (event) => {
+    event.preventDefault()
+    //console.log('button clicked', event.target)
+    
+    removeBlog({
+      id: blog.id,
+      title: blog.title,
     })
   }
 
@@ -44,6 +57,7 @@ const Blog = ({ blog, updateBlog }) => {
           <li>url: {blog.url}</li>
           <li>likes: {blog.likes} <button onClick={updateLikes}>like</button></li>
           <li>user: {blog.user.username}</li>
+          {user.username === blog.user.username && <li><button onClick={deleteBlog}>remove</button></li>}
         </ul>
       )}
     </div>
