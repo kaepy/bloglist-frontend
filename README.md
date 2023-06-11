@@ -11,3 +11,4 @@
       const savedBlog = await blog.save()
       await savedBlog.populate('user', { username: 1, name: 1 }) // hoitaa homman
 5.9 blogin like-painikkeen toiminnallisuus
+5.10 sorttaa blogit likejen mukaan nousevasti
