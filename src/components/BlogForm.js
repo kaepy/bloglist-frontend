@@ -4,6 +4,7 @@ const BlogForm = ({ addBlog, newTitle, newAuthor, newUrl, handleTitleChange, han
 
   return (
     <div>
+      <h2>Create new blog</h2>
       <form onSubmit={addBlog}>
         <div>title: <input value={newTitle} onChange={handleTitleChange} /></div>
         <div>author: <input value={newAuthor} onChange={handleAuthorChange} /></div>

@@ -3,3 +3,4 @@
 5.2 kirjautuminen "pysyvän" local storagen avulla
 5.3 blogien luonti kirjautuneena
 5.4 notifikaatiot onnistuneista ja epäonnistuneista toimenpiteistä
+5.5 Blogin luomisen lomake näytetään ainoastaan tarvittaessa
