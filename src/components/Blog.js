@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, updateBlog }) => {
   const [showBlogDetail, setShowBlogDetail] = useState(false)
   //console.log(showBlogDetail)
 
@@ -20,14 +20,29 @@ const Blog = ({ blog }) => {
     listStyleType: 'none',
   }
 
+  const updateLikes = (event) => {
+    event.preventDefault()
+    //console.log('button clicked', event.target)
+
+    const newLikes = blog.likes + 1
+    
+    updateBlog({
+      id: blog.id,
+      title: blog.title,
+      author: blog.author,
+      url: blog.url,
+      likes: newLikes
+    })
+  }
+
   return (
     <div style={blogStyle}>
       {blog.title} <button onClick={() => setShowBlogDetail(!showBlogDetail)}> {showBlogDetail ? 'hide' : 'view'} </button>
       {showBlogDetail && (
         <ul style={ulStyle}>
           <li>author: {blog.author}</li>
-          <li>url: {blog.url} <button>like</button></li>
-          <li>likes: {blog.likes}</li>
+          <li>url: {blog.url}</li>
+          <li>likes: {blog.likes} <button onClick={updateLikes}>like</button></li>
           <li>user: {blog.user.username}</li>
         </ul>
       )}

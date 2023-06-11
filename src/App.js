@@ -75,7 +75,22 @@ const App = () => {
         setBlogs(blogs.concat(returnedBlog))
       })
 
-    handleNotificationChange(`A new blog ${blogObject.newTitle} by ${blogObject.newAuthor} added`)
+    handleNotificationChange(`A new blog ${blogObject.title} by ${blogObject.author} added`)
+  }
+
+  const updateBlog = (blogObject) => {
+    //console.log('blogObject', blogObject)
+
+    blogService
+      .update(blogObject.id, blogObject)
+      .then(returnedBlog => {
+        setBlogs(blogs.map(blog => blog.id !== blogObject.id ? blog : returnedBlog))
+        //console.log('returnedBlog', returnedBlog)
+      })
+
+    //console.log('blogs', blogs)
+
+    handleNotificationChange(`New like added to blog ${blogObject.title}`)
   }
 
   const handleNotificationChange = (notification) => {
@@ -97,7 +112,7 @@ const App = () => {
 
       {!user && <LoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword} />}
 
-      {user && <Bloglist blogFormRef={blogFormRef} user={user} blogs={blogs} logout={logout} createBlog={addBlog} />}
+      {user && <Bloglist blogFormRef={blogFormRef} user={user} blogs={blogs} logout={logout} createBlog={addBlog} updateBlog={updateBlog} />}
 
     </div>
   )
