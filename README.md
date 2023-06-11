@@ -5,3 +5,4 @@
 5.4 notifikaatiot onnistuneista ja epäonnistuneista toimenpiteistä
 5.5 Blogin luomisen lomake näytetään ainoastaan tarvittaessa
 5.6 Blogin luomiseen liittyvät tilat osaksi komponenttia
+5.7 Blogin kaikki muut paitsi title tieto napin taakse
