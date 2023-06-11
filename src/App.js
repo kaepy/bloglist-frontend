@@ -11,6 +11,9 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [newTitle, setNewTitle] = useState('')
+  const [newAuthor, setNewAuthor] = useState('')
+  const [newUrl, setNewUrl] = useState('')
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -63,6 +66,41 @@ const App = () => {
     console.log('logged out')
   }
 
+  const addBlog = async (event) => {
+    event.preventDefault()
+    //console.log('button clicked', event.target)
+
+    const blogObject = {
+      title: newTitle,
+      author: newAuthor,
+      url: newUrl
+    }
+
+    blogService
+      .create(blogObject)
+      .then(returnedBlog => {
+        setBlogs(blogs.concat(returnedBlog))
+        setNewTitle('')
+        setNewAuthor('')
+        setNewUrl('')
+      })
+  }
+
+  const handleTitleChange = (event) => {
+    //console.log(event.target.value)
+    setNewTitle(event.target.value)
+  }
+
+  const handleAuthorChange = (event) => {
+    //console.log(event.target.value)
+    setNewAuthor(event.target.value)
+  }
+
+  const handleUrlChange = (event) => {
+    //console.log(event.target.value)
+    setNewUrl(event.target.value)
+  }
+
   return (
     <div>
       <h2>blogs</h2>
@@ -70,8 +108,8 @@ const App = () => {
       <Notification message={errorMessage} />
 
       {!user && <LoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword} />}
-      
-      {user && <Bloglist user={user} blogs={blogs} logout={logout} />}
+
+      {user && <Bloglist user={user} blogs={blogs} logout={logout} addBlog={addBlog} newTitle={newTitle} newAuthor={newAuthor} newUrl={newUrl} handleTitleChange={handleTitleChange} handleAuthorChange={handleAuthorChange} handleUrlChange={handleUrlChange} />}
 
     </div>
   )

@@ -1,8 +1,9 @@
 //import React from 'react'
 import Blog from './Blog'
+import BlogForm from './BlogForm'
 
 
-const Bloglist = ({ user, blogs, logout }) => {
+const Bloglist = ({ user, blogs, logout, addBlog, newTitle, newAuthor, newUrl, handleTitleChange, handleAuthorChange, handleUrlChange }) => {
 
   return (
     <div>
@@ -11,6 +12,7 @@ const Bloglist = ({ user, blogs, logout }) => {
         <Blog key={blog.id} blog={blog} />
       )
     }
+    <BlogForm addBlog={addBlog} newTitle={newTitle} newAuthor={newAuthor} newUrl={newUrl} handleTitleChange={handleTitleChange} handleAuthorChange={handleAuthorChange} handleUrlChange={handleUrlChange} />
     </div>
   )
 }
