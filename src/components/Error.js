@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Notification = ({ message }) => {
-  const notificationStyle = {
-    color: 'green',
+const Error = ({ message }) => {
+  const errorStyle = {
+    color: 'red',
     background: 'lightgrey',
     fontWeight: 'bold',
     fontSize: 16,
@@ -17,10 +17,10 @@ const Notification = ({ message }) => {
   }
 
   return (
-    <div style={notificationStyle}>
+    <div style={errorStyle}>
       {message}
     </div>
   )
 }
 
-export default Notification
+export default Error

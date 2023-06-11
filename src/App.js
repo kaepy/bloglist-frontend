@@ -3,10 +3,12 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
+import Error from './components/Error'
 import Bloglist from './components/Bloglist'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
+  const [notificationMessage, setNotificationMessage] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -44,16 +46,13 @@ const App = () => {
       )
       blogService.setToken(user.token)
       setUser(user)
+      handleNotificationChange(`Welcome ${user.username}!`)
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setErrorMessage('wrong credentials')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      handleErrorChange('Ups! Wrong credentials. Try again :)')
     }
 
-    console.log('logging in with', username)
   }
 
   const logout = () => {
@@ -63,7 +62,7 @@ const App = () => {
     window.localStorage.removeItem('loggedBlogappUser')
     setUser(null)
 
-    console.log('logged out')
+    handleNotificationChange(`See you again!`)
   }
 
   const addBlog = async (event) => {
@@ -84,6 +83,8 @@ const App = () => {
         setNewAuthor('')
         setNewUrl('')
       })
+
+    handleNotificationChange(`A new blog ${newTitle} by ${newAuthor} added`)
   }
 
   const handleTitleChange = (event) => {
@@ -101,11 +102,22 @@ const App = () => {
     setNewUrl(event.target.value)
   }
 
+  const handleNotificationChange = (notification) => {
+    setNotificationMessage(notification)
+    setTimeout(() => { setNotificationMessage(null) }, 5000)
+  }
+
+  const handleErrorChange = (error) => {
+    setErrorMessage(error)
+    setTimeout(() => { setErrorMessage(null) }, 5000)
+  }
+
   return (
     <div>
       <h2>blogs</h2>
 
-      <Notification message={errorMessage} />
+      <Notification message={notificationMessage} />
+      <Error message={errorMessage} />
 
       {!user && <LoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword} />}
 
