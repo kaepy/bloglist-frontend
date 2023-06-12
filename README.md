@@ -13,3 +13,4 @@
 5.9 blogin like-painikkeen toiminnallisuus
 5.10 sorttaa blogit likejen mukaan nousevasti
 5.11 Nappi blogin poistamiselle
+5.12 PropTypet ja ESLint käyttöön

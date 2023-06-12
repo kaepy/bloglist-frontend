@@ -59,7 +59,7 @@ const App = () => {
     window.localStorage.removeItem('loggedBlogappUser')
     setUser(null)
 
-    handleNotificationChange(`See you again!`)
+    handleNotificationChange('See you again!')
   }
 
   const addBlog = (blogObject) => {
@@ -96,7 +96,7 @@ const App = () => {
 
     if (window.confirm(`Are you sure you want to remove ${blogObject.title} ?`)) {
       blogService.remove(blogObject.id).then(() => {
-        setBlogs(blogs.filter(blog => blog.id !== blogObject.id))   
+        setBlogs(blogs.filter(blog => blog.id !== blogObject.id))
 
         handleNotificationChange(`Blog ${blogObject.title} removed`)
       })

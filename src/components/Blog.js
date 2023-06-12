@@ -27,7 +27,7 @@ const Blog = ({ user, blog, updateBlog, removeBlog }) => {
     const newLikes = blog.likes + 1
 
     console.log('Blog-blog: ', blog)
-    
+
     updateBlog({
       id: blog.id,
       title: blog.title,
@@ -41,7 +41,7 @@ const Blog = ({ user, blog, updateBlog, removeBlog }) => {
   const deleteBlog = (event) => {
     event.preventDefault()
     //console.log('button clicked', event.target)
-    
+
     removeBlog({
       id: blog.id,
       title: blog.title,

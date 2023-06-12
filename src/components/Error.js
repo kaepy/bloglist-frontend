@@ -11,7 +11,7 @@ const Error = ({ message }) => {
     padding: 10,
     marginBottom: 10,
   }
-  
+
   if (message === null) {
     return null
   }
