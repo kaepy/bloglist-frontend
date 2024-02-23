@@ -48,9 +48,12 @@ const Blog = ({ user, blog, updateBlog, removeBlog }) => {
     })
   }
 
+  const buttonToggle = () => setShowBlogDetail(!showBlogDetail)
+  const buttonLabel = showBlogDetail ? 'hide' : 'view'
+
   return (
     <div style={blogStyle}>
-      {blog.title} <button onClick={() => setShowBlogDetail(!showBlogDetail)}> {showBlogDetail ? 'hide' : 'view'} </button>
+      {blog.title} <button onClick={buttonToggle}> {buttonLabel} </button>
       {showBlogDetail && (
         <ul style={ulStyle}>
           <li>author: {blog.author}</li>
