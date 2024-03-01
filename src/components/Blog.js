@@ -26,7 +26,7 @@ const Blog = ({ user, blog, updateBlog, removeBlog }) => {
 
     const newLikes = blog.likes + 1
 
-    console.log('Blog-blog: ', blog)
+    //console.log('Blog-blog: ', blog)
 
     updateBlog({
       id: blog.id,

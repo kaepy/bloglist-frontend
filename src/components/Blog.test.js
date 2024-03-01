@@ -6,9 +6,6 @@ import userEvent from '@testing-library/user-event'
 
 // CI=true npm test
 
-// 5.15: blogilistan testit, step 3
-// Tee testi, joka varmistaa, että jos komponentin like-nappia painetaan kahdesti, komponentin propsina saamaa tapahtumankäsittelijäfunktiota kutsutaan kaksi kertaa.
-
 describe('Blog Component', () => {
   const blog = {
     title: 'This is Blog title',
@@ -62,21 +59,21 @@ describe('Blog Component', () => {
 
     const component = render(<Blog blog={blog} buttonToggle={mockViewHandler} updateBlog={likesHandler} user={userX} />)
 
-    screen.debug()
+    //screen.debug()
 
     const user = userEvent.setup()
 
     const viewButton = screen.getByText('view')
     await user.click(viewButton)
 
-    screen.debug()
+    //screen.debug()
 
     expect(component.container).toHaveTextContent(blog.likes)
 
     const likeButton = screen.getByText('like')
     await user.dblClick(likeButton)
 
-    screen.debug()
+    //screen.debug()
 
     //expect(likesHandler.mock.calls).toHaveLength(2)
     expect(likesHandler).toHaveBeenCalledTimes(2)
