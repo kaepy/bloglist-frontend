@@ -6,8 +6,8 @@ import userEvent from '@testing-library/user-event'
 
 // CI=true npm test
 
-// 5.14: blogilistan testit, step 2
-// Tee testi, joka varmistaa että myös url, likejen määrä ja käyttäjä näytetään, kun blogin kaikki tiedot näyttävää nappia on painettu.
+// 5.15: blogilistan testit, step 3
+// Tee testi, joka varmistaa, että jos komponentin like-nappia painetaan kahdesti, komponentin propsina saamaa tapahtumankäsittelijäfunktiota kutsutaan kaksi kertaa.
 
 describe('Blog Component', () => {
   const blog = {
@@ -24,33 +24,64 @@ describe('Blog Component', () => {
     const component = render(<Blog blog={blog} />)
     expect(component.container).toHaveTextContent(blog.title)
 
-    screen.debug()
+    //screen.debug()
   })
 
   test('renders content when view button is pressed', async () => {
-    const mockHandler = jest.fn()
+    const mockViewHandler = jest.fn()
 
     const userX = {
       username: 'testi'
     }
 
-    const component = render(<Blog blog={blog} buttonToggle={mockHandler} user={userX} />)
+    const component = render(<Blog blog={blog} buttonToggle={mockViewHandler} user={userX} />)
 
-    screen.debug()
+    //screen.debug()
 
     const user = userEvent.setup()
 
     const viewButton = screen.getByText('view')
-
     await user.click(viewButton)
 
-    screen.debug()
+    //screen.debug()
 
     expect(component.container).toHaveTextContent(blog.url)
     expect(component.container).toHaveTextContent(blog.likes)
     expect(component.container).toHaveTextContent(blog.user.username)
 
     //screen.debug()
+  })
+
+  test('renders likes when like button is pressed twice', async () => {
+    const mockViewHandler = jest.fn()
+    const likesHandler = jest.fn()
+
+    const userX = {
+      username: 'testi'
+    }
+
+    const component = render(<Blog blog={blog} buttonToggle={mockViewHandler} updateBlog={likesHandler} user={userX} />)
+
+    screen.debug()
+
+    const user = userEvent.setup()
+
+    const viewButton = screen.getByText('view')
+    await user.click(viewButton)
+
+    screen.debug()
+
+    expect(component.container).toHaveTextContent(blog.likes)
+
+    const likeButton = screen.getByText('like')
+    await user.dblClick(likeButton)
+
+    screen.debug()
+
+    //expect(likesHandler.mock.calls).toHaveLength(2)
+    expect(likesHandler).toHaveBeenCalledTimes(2)
+
+    screen.debug()
   })
 
 })
