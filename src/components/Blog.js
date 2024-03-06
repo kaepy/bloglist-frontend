@@ -60,7 +60,7 @@ const Blog = ({ user, blog, updateBlog, removeBlog }) => {
           <li>url: {blog.url}</li>
           <li>likes: {blog.likes} <button id="like-button" onClick={updateLikes}>like</button></li>
           <li>user: {blog.user.username}</li>
-          {user.username === blog.user.username && <li><button onClick={deleteBlog}>remove</button></li>}
+          {user.username === blog.user.username && <li><button id="remove-button" onClick={deleteBlog}>remove</button></li>}
         </ul>
       )}
     </div>
