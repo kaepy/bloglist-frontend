@@ -1,14 +1,21 @@
-// 5.21: blogilistan end to end ‑testit, step5
-// Tee testi, joka varmistaa, että blogin lisännyt käyttäjä voi poistaa blogin.
+// 5.22: blogilistan end to end ‑testit, step6
+// Tee testi, joka varmista, että vain blogin lisännyt käyttäjä näkee blogin poistonapin.
 
 describe('Blog app', function () {
   beforeEach(function () {
     cy.request('POST', 'http://localhost:3003/api/testing/reset')
-    const user = {
+    const user1 = {
       username: 'himmeli',
       password: 'hommeli'
     }
-    cy.request('POST', 'http://localhost:3003/api/users/', user)
+
+    const user2 = {
+      username: 'gimmeli',
+      password: 'gommeli'
+    }
+
+    cy.request('POST', 'http://localhost:3003/api/users/', user1)
+    cy.request('POST', 'http://localhost:3003/api/users/', user2)
     cy.visit('http://localhost:3000')
   })
 
@@ -67,7 +74,7 @@ describe('Blog app', function () {
       cy.contains('likes').should('contain', '1')
     })
 
-    it.only('A blog can be removed', function () {
+    it('A blog can be removed', function () {
       cy.contains('and another title').as('blogToRemove')
         .find('#viewhide-button')
         .click()
@@ -77,6 +84,21 @@ describe('Blog app', function () {
       cy.contains('Blog and another title removed')
       cy.get('and another title').should('not.exist')
     })
+
+    it('Only blog creator can see remove button', function () {
+      cy.contains('and another title').as('blogToRemove')
+        .find('#viewhide-button').click()
+
+      cy.get('@blogToRemove').find('#remove-button')
+
+      cy.logout()
+      cy.login({ username: 'gimmeli', password: 'gommeli' })
+
+      cy.get('@blogToRemove').find('#viewhide-button').click()
+
+      cy.get('@blogToRemove').find('#remove-button').should('not.exist')
+    })
+
   })
 
 })
