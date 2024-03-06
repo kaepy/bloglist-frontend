@@ -1,5 +1,5 @@
-// 5.19: blogilistan end to end ‑testit, step3
-// Tee testi, joka varmistaa, että kirjautunut käyttäjä pystyy luomaan blogin. Testin tulee varmistaa, että luotu blogi tulee näkyville blogien listalle.
+// 5.20: blogilistan end to end ‑testit, step4
+// Tee testi, joka varmistaa, että blogia voi likettää.
 
 describe('Blog app', function () {
   beforeEach(function () {
@@ -36,14 +36,18 @@ describe('Blog app', function () {
     })
   })
 
-  describe('When logged in', function() {
-    beforeEach(function() {
-      cy.get('#username').type('himmeli')
-      cy.get('#password').type('hommeli')
-      cy.get('#login-button').click()
+  describe('When logged in', function () {
+    beforeEach(function () {
+      cy.login({ username: 'himmeli', password: 'hommeli' })
+
+      cy.createBlog({
+        title: 'another title',
+        author: 'another author',
+        url: 'another url'
+      })
     })
 
-    it('A blog can be created', function() {
+    it('A blog can be created', function () {
       cy.contains('new blog').click()
 
       cy.get('#title').type('title example')
@@ -53,6 +57,16 @@ describe('Blog app', function () {
 
       cy.contains('A new blog title example by author example added')
       cy.contains('title example')
+    })
+
+    it('A blog can be liked', function () {
+      cy.get('#viewhide-button').click()
+      cy.contains('likes').should('contain', '0')
+
+      cy.get('#like-button').click()
+
+      cy.contains('New like added to blog another title')
+      cy.contains('likes').should('contain', '1')
     })
   })
 
