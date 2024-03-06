@@ -1,5 +1,5 @@
-// 5.22: blogilistan end to end ‑testit, step6
-// Tee testi, joka varmista, että vain blogin lisännyt käyttäjä näkee blogin poistonapin.
+// 5.23: blogilistan end to end ‑testit, step6
+// Tee testi, joka varmistaa, että blogit järjestetään likejen mukaiseen järjestykseen, eniten likejä saanut blogi ensin.
 
 describe('Blog app', function () {
   beforeEach(function () {
@@ -47,9 +47,9 @@ describe('Blog app', function () {
     beforeEach(function () {
       cy.login({ username: 'himmeli', password: 'hommeli' })
 
+      cy.createBlog({ title: 'yet title', author: 'yet author', url: 'yet url', likes: '10' })
       cy.createBlog({ title: 'another title', author: 'another author', url: 'another url' })
-      cy.createBlog({ title: 'yet another title', author: 'yet another author', url: 'yet another url' })
-      cy.createBlog({ title: 'and another title', author: 'and another author', url: 'and another url' })
+      cy.createBlog({ title: 'and title', author: 'and author', url: 'and url', likes: '5' })
     })
 
     it('A blog can be created', function () {
@@ -65,28 +65,31 @@ describe('Blog app', function () {
     })
 
     it('A blog can be liked', function () {
-      cy.get('#viewhide-button').click()
-      cy.contains('likes').should('contain', '0')
+      cy.contains('another title').as('likeBlog')
+        .find('#viewhide-button')
+        .click()
 
-      cy.get('#like-button').click()
+      cy.get('@likeBlog').contains('likes').should('contain', '0')
+      cy.get('@likeBlog').find('#like-button').click()
 
       cy.contains('New like added to blog another title')
-      cy.contains('likes').should('contain', '1')
+      // ei välttämättä se paras ratkasu, mutta toimii!
+      cy.get('@likeBlog').parent().contains('likes').should('contain', '1')
     })
 
     it('A blog can be removed', function () {
-      cy.contains('and another title').as('blogToRemove')
+      cy.contains('and title').as('blogToRemove')
         .find('#viewhide-button')
         .click()
 
       cy.get('@blogToRemove').find('#remove-button').click()
 
-      cy.contains('Blog and another title removed')
+      cy.contains('Blog and title removed')
       cy.get('and another title').should('not.exist')
     })
 
     it('Only blog creator can see remove button', function () {
-      cy.contains('and another title').as('blogToRemove')
+      cy.contains('yet title').as('blogToRemove')
         .find('#viewhide-button').click()
 
       cy.get('@blogToRemove').find('#remove-button')
