@@ -1,5 +1,5 @@
-// 5.18: blogilistan end to end ‑testit, step2
-// Tee testit kirjautumiselle, testaa sekä onnistunut että epäonnistunut kirjautuminen. Luo testejä varten käyttäjä beforeEach-lohkossa.
+// 5.19: blogilistan end to end ‑testit, step3
+// Tee testi, joka varmistaa, että kirjautunut käyttäjä pystyy luomaan blogin. Testin tulee varmistaa, että luotu blogi tulee näkyville blogien listalle.
 
 describe('Blog app', function () {
   beforeEach(function () {
@@ -33,6 +33,26 @@ describe('Blog app', function () {
       cy.get('#login-button').click()
 
       cy.contains('Ups! Wrong credentials. Try again :)')
+    })
+  })
+
+  describe('When logged in', function() {
+    beforeEach(function() {
+      cy.get('#username').type('himmeli')
+      cy.get('#password').type('hommeli')
+      cy.get('#login-button').click()
+    })
+
+    it('A blog can be created', function() {
+      cy.contains('new blog').click()
+
+      cy.get('#title').type('title example')
+      cy.get('#author').type('author example')
+      cy.get('#url').type('url example')
+      cy.get('#create-button').click()
+
+      cy.contains('A new blog title example by author example added')
+      cy.contains('title example')
     })
   })
 
