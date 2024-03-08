@@ -47,9 +47,9 @@ describe('Blog app', function () {
     beforeEach(function () {
       cy.login({ username: 'himmeli', password: 'hommeli' })
 
-      cy.createBlog({ title: 'yet title', author: 'yet author', url: 'yet url', likes: '10' })
+      cy.createBlog({ title: 'yet title', author: 'yet author', url: 'yet url' })
       cy.createBlog({ title: 'another title', author: 'another author', url: 'another url' })
-      cy.createBlog({ title: 'and title', author: 'and author', url: 'and url', likes: '5' })
+      cy.createBlog({ title: 'and title', author: 'and author', url: 'and url' })
     })
 
     it('A blog can be created', function () {
@@ -100,6 +100,32 @@ describe('Blog app', function () {
       cy.get('@blogToRemove').find('#viewhide-button').click()
 
       cy.get('@blogToRemove').find('#remove-button').should('not.exist')
+    })
+
+    it.only('Blogs are sorted by likes', function () {
+      cy.get('.blog').contains('yet title').as('likeYetBlog')
+        .find('#viewhide-button')
+        .click()
+
+      cy.get('.blog').contains('another title').as('likeAnotherBlog')
+        .find('#viewhide-button')
+        .click()
+
+      cy.get('.blog').contains('and title').as('likeAndBlog')
+        .find('#viewhide-button')
+        .click()
+
+      for (let i = 0; i < 5; i++) {
+        cy.get('@likeAnotherBlog').find('#like-button').click()
+        cy.wait(1000)
+      }
+
+      cy.get('@likeYetBlog').find('#like-button').dblclick()
+      cy.wait(1000)
+
+      cy.get('.blog').eq(0).should('contain', 'and title')
+      cy.get('.blog').eq(1).should('contain', 'yet title')
+      cy.get('.blog').eq(2).should('contain', 'another title')
     })
 
   })

@@ -52,7 +52,7 @@ const Blog = ({ user, blog, updateBlog, removeBlog }) => {
   const buttonLabel = showBlogDetail ? 'hide' : 'view'
 
   return (
-    <div style={blogStyle}>
+    <div className='blog' style={blogStyle}>
       {blog.title} <button id="viewhide-button" onClick={buttonToggle}> {buttonLabel} </button>
       {showBlogDetail && (
         <ul style={ulStyle}>
